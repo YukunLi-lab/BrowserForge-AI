@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  # Frontend - Next.js 15
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    depends_on:
+      - api
+      - redis
+    networks:
+      - browserforge
+
+  # Backend - FastAPI
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./browserforge.db
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-key}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SANDBOX_CPU_LIMIT=0.5
+      - SANDBOX_MEMORY_LIMIT=512m
+      - SANDBOX_TIMEOUT=300
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app/data
+    depends_on:
+      - redis
+    networks:
+      - browserforge
+
+  # Redis for job queue
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - browserforge
+
+  # Docker-in-Docker for sandbox containers
+  dind:
+    image: docker:dind
+    privileged: true
+    volumes:
+      - dind_data:/var/lib/docker
+    networks:
+      - browserforge
+
+volumes:
+  redis_data:
+  dind_data:
+
+networks:
+  browserforge:
+    driver: bridge
