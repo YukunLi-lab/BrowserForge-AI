@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import {
@@ -11,14 +11,11 @@ import {
   File,
   Folder,
   RefreshCw,
-  CheckCircle2,
-  XCircle,
   Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { projectsApi, Project, ForgeStatus } from "@/lib/api";
 import { toast } from "@/components/ui/toaster";
@@ -35,7 +32,7 @@ const agentConfig: Record<AgentType, { label: string; color: string }> = {
   deployer: { label: "Deployer", color: "bg-violet-500" },
 };
 
-export default function EditorPage() {
+function EditorContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const projectId = searchParams.get("project");
@@ -56,7 +53,8 @@ export default function EditorPage() {
       return;
     }
     loadProject();
-  }, [projectId, templateId, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId, templateId]);
 
   const loadProject = async () => {
     const token = localStorage.getItem("token");
@@ -95,6 +93,7 @@ export default function EditorPage() {
       toast({ type: "error", title: "Failed to start forging" });
       setIsForging(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   const subscribeToStatus = (token: string, id: string) => {
@@ -351,5 +350,21 @@ export default function EditorPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function EditorLoading() {
+  return (
+    <div className="h-screen flex items-center justify-center bg-background">
+      <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+    </div>
+  );
+}
+
+export default function EditorPage() {
+  return (
+    <Suspense fallback={<EditorLoading />}>
+      <EditorContent />
+    </Suspense>
   );
 }

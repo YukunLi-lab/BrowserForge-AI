@@ -1,6 +1,4 @@
-from playwright.sync_api import sync_playwright
 from app.core.config import get_settings
-import httpx
 
 settings = get_settings()
 

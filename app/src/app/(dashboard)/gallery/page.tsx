@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Fork, Star } from "lucide-react";
+import { GitFork, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -112,7 +112,7 @@ export default function GalleryPage() {
                 </p>
                 <div className="flex items-center gap-4 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
-                    <Fork className="w-3 h-3" />
+                    <GitFork className="w-3 h-3" />
                     {template.forks_count}
                   </span>
                   <span>by {template.author.name}</span>
@@ -130,7 +130,7 @@ export default function GalleryPage() {
                   size="icon"
                   onClick={(e) => handleFork(template.id, e)}
                 >
-                  <Fork className="w-4 h-4" />
+                  <GitFork className="w-4 h-4" />
                 </Button>
               </CardFooter>
             </Card>

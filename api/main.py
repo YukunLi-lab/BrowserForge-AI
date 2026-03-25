@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from app.api.routes import auth, projects, gallery
-from app.core.config import settings
 from app.core.database import engine, Base
 
 

@@ -5,7 +5,6 @@ from app.agents.coder import CoderAgent
 from app.agents.tester import TesterAgent
 from app.agents.deployer import DeployerAgent
 from app.api.routes.projects import forge_statuses
-import json
 
 
 class ForgeService:
@@ -55,7 +54,7 @@ class ForgeService:
 
             # Step 4: Deployment preparation
             self.update_status(project_id, "deploying", "deployer", 85, "Deployer: Preparing deployment...")
-            deploy_config = await self.agents["deployer"].run(generated_code)
+            await self.agents["deployer"].run(generated_code)
             self.update_status(project_id, "deploying", "deployer", 95, "Deployer: Configuration complete")
 
             # Mark as completed

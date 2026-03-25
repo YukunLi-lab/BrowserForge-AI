@@ -133,7 +133,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     def _generate_page(self, prompt: str, research_data: dict) -> str:
         # Generate page based on the prompt
         components = research_data.get("components", [])
-        patterns = research_data.get("patterns", [])
 
         # Build a dynamic page based on components found
         component_imports = []

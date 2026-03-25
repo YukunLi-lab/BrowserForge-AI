@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from app.core.database import get_db
@@ -7,7 +7,6 @@ from app.models.user import User
 from app.models.project import Project
 from app.schemas.project import ProjectCreate, ProjectResponse, ForgeStatus, DeployResult
 from app.services.forge_service import ForgeService
-import json
 
 router = APIRouter()
 

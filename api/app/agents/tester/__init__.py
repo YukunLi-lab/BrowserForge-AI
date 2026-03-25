@@ -1,8 +1,5 @@
 from app.core.config import get_settings
 import docker
-import tempfile
-import os
-import shutil
 
 settings = get_settings()
 
@@ -15,7 +12,7 @@ class TesterAgent:
     def __init__(self):
         try:
             self.docker_client = docker.from_env()
-        except:
+        except Exception:
             self.docker_client = None
 
     async def run(self, generated_code: dict) -> dict:

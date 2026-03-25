@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   Code2,
   Folder,
-  Gallery,
+  LayoutGrid,
   LogOut,
   Plus,
   Settings,
@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/projects", icon: Folder, label: "Projects" },
-  { href: "/gallery", icon: Gallery, label: "Gallery" },
+  { href: "/gallery", icon: LayoutGrid, label: "Gallery" },
   { href: "/settings", icon: Settings, label: "Settings" },
 ];
 
