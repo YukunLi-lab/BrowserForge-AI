@@ -12,6 +12,7 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "test": "turbo test",
+    "typecheck": "turbo typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:migrate": "cd api && alembic upgrade head",
     "docker:up": "docker-compose up -d",
