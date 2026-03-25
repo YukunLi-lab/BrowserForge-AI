@@ -1,5 +1,4 @@
 # Placeholder test to ensure pytest runs successfully
-import pytest
 
 
 def test_placeholder():
